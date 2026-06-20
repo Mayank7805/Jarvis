@@ -1,0 +1,28 @@
+{
+  "name": "jarvis-hud",
+  "version": "1.0.0",
+  "description": "Iron Man-style HUD for Jarvis Voice Assistant",
+  "main": "electron/main.js",
+  "scripts": {
+    "build": "npx esbuild src/index.tsx --bundle --outfile=dist/bundle.js --platform=browser --target=chrome120",
+    "start": "npm run build && npx electron .",
+    "dev": "npm run build && npx electron . --dev",
+    "build:dist": "electron-builder"
+  },
+  "dependencies": {
+    "@types/leaflet": "^1.9.21",
+    "framer-motion": "^11.18.0",
+    "leaflet": "^1.9.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.0"
+  }
+}

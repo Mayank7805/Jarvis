@@ -1,0 +1,69 @@
+# ─────────────────────────────────────────────
+# Jarvis Voice Assistant — Configuration
+# ─────────────────────────────────────────────
+
+assistant:
+  name: "Jarvis"
+
+# ── Wake / Activation ───────────────────────
+activation:
+  wake_words: ["hey jarvis"]
+  clap_detection: true
+  clap_spike_threshold: 0.3      # amplitude threshold for a clap spike
+  clap_max_interval: 0.8         # max seconds between two claps
+
+# ── Audio Capture ───────────────────────────
+audio:
+  sample_rate: 16000             # Hz — required by Whisper
+  channels: 1                    # mono
+  block_size: 1024               # frames per read chunk
+  silence_threshold: 0.001       # RMS below this = silence
+  silence_duration: 0.7          # snappier end-of-speech detection
+  max_record_seconds: 20         # safety cap on recording length
+
+# ── Speech-to-Text (faster-whisper) ─────────
+stt:
+  model: "tiny.en"
+  device: "cpu"
+  compute_type: "int8"
+  beam_size: 1              # fastest; tiny model doesn't benefit from wide beams
+  no_speech_threshold: 0.6       # segments with no_speech_prob above this are discarded
+
+# ── Wake Word (openwakeword) ────────────────
+wake_word:
+  model_name: "hey_jarvis"
+  threshold: 0.5                 # confidence threshold for detection
+  chunk_size: 1280               # frames per prediction (80 ms at 16 kHz)
+
+# ── Beep Feedback ──────────────────────────
+beep:
+  frequency: 880                 # Hz
+  duration: 0.1                  # seconds
+  volume: 0.5                    # 0.0 – 1.0
+
+# ── Text-to-Speech (edge-tts) ─────────────
+tts:
+  voice: "en-US-GuyNeural"       # deep, calm, professional
+  rate: "+10%"                   # slightly faster than default
+  volume: "+0%"                  # no volume adjustment
+
+# ── LLM Brain ─────────────────────────────
+llm:
+  local_model: "phi3.5"
+  api_model: "gemini-2.5-flash"
+  max_history: 10
+  internet_keywords:
+    - search
+    - weather
+    - news
+    - latest
+    - today
+    - current price
+    - who won
+    - score
+
+# ── Skills Engine ─────────────────────────
+skills:
+  enabled: true
+  notes_file: "data/notes.txt"
+  screenshots_dir: "data/screenshots"
